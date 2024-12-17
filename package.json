@@ -3,7 +3,6 @@
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"dev": "wireit",
-		"deploy": "wireit",
 		"typecheck": "wireit",
 		"format": "biome format .",
 		"format:fix": "pnpm format --write .",
@@ -22,9 +21,6 @@
 	"wireit": {
 		"dev": {
 			"dependencies": ["./apps/backend:dev", "./apps/frontend:dev"]
-		},
-		"deploy": {
-			"dependencies": ["./apps/backend:deploy", "./apps/frontend:deploy"]
 		},
 		"typecheck": {
 			"dependencies": ["./packages/shared:typecheck", "./apps/backend:typecheck", "./apps/frontend:typecheck"]
