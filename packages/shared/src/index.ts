@@ -1,15 +1,21 @@
-export interface Todo {
-	id: number;
-	title: string;
-	completed: boolean;
-	created_at: string;
-}
+import { z } from "zod";
 
-export interface CreateTodoInput {
-	title: string;
-}
+export const todoSchema = z.object({
+	id: z.number(),
+	title: z.string(),
+	completed: z.boolean(),
+	created_at: z.string(),
+});
 
-export interface UpdateTodoInput {
-	title?: string;
-	completed?: boolean;
-}
+export const createTodoSchema = z.object({
+	title: z.string().min(1, "Title is required").max(100, "Title is too long"),
+});
+
+export const updateTodoSchema = z
+	.object({
+		title: z.string().min(1).max(100).optional(),
+		completed: z.boolean().optional(),
+	})
+	.refine((data) => data.title !== undefined || data.completed !== undefined, {
+		message: "At least one field must be provided",
+	});

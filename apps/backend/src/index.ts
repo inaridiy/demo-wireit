@@ -2,7 +2,7 @@ import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { z } from "zod";
 import { zValidator } from "@hono/zod-validator";
-import type { Todo, CreateTodoInput, UpdateTodoInput } from "shared";
+import { todoSchema, createTodoSchema, updateTodoSchema } from "shared";
 
 type Bindings = {
 	DB: D1Database;
@@ -11,28 +11,15 @@ type Bindings = {
 const app = new Hono<{ Bindings: Bindings }>();
 app.use("/*", cors());
 
-// バリデーションスキーマ
-const createTodoSchema = z.object({
-	title: z.string().min(1, "Title is required").max(100, "Title is too long"),
-});
-
-const updateTodoSchema = z
-	.object({
-		title: z.string().min(1).max(100).optional(),
-		completed: z.boolean().optional(),
-	})
-	.refine((data) => data.title !== undefined || data.completed !== undefined, {
-		message: "At least one field must be provided",
-	});
-
 const paramsSchema = z.object({
 	id: z.string().min(1),
 });
 
 // TODOの一覧を取得
 app.get("/api/todos", async (c) => {
-	const { results } = await c.env.DB.prepare("SELECT * FROM todos ORDER BY created_at DESC").all<Todo>();
-	return c.json(results);
+	const { results } = await c.env.DB.prepare("SELECT * FROM todos ORDER BY created_at DESC").all();
+	const validResults = results.map((result) => todoSchema.parse(result));
+	return c.json(validResults);
 });
 
 // TODOを作成
@@ -45,9 +32,10 @@ app.post("/api/todos", zValidator("json", createTodoSchema), async (c) => {
 		return c.json({ error: "Failed to create todo" }, 500);
 	}
 
-	const { results } = await c.env.DB.prepare("SELECT * FROM todos WHERE id = last_insert_rowid()").all<Todo>();
+	const { results } = await c.env.DB.prepare("SELECT * FROM todos WHERE id = last_insert_rowid()").all();
+	const validResults = results.map((result) => todoSchema.parse(result));
 
-	return c.json(results[0], 201);
+	return c.json(validResults[0], 201);
 });
 
 // TODOを更新
@@ -75,13 +63,14 @@ app.patch("/api/todos/:id", zValidator("json", updateTodoSchema), zValidator("pa
 		return c.json({ error: "Failed to update todo" }, 500);
 	}
 
-	const { results } = await c.env.DB.prepare("SELECT * FROM todos WHERE id = ?").bind(id).all<Todo>();
+	const { results } = await c.env.DB.prepare("SELECT * FROM todos WHERE id = ?").bind(id).all();
+	const validResults = results.map((result) => todoSchema.parse(result));
 
-	if (results.length === 0) {
+	if (validResults.length === 0) {
 		return c.json({ error: "Todo not found" }, 404);
 	}
 
-	return c.json(results[0]);
+	return c.json(validResults[0]);
 });
 
 // TODOを削除
