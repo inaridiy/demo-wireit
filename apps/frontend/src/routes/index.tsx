@@ -11,7 +11,7 @@ export const IndexPage: FC<{ todos: Todo[] }> = ({ todos }) => {
 				<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
 			</head>
 			<body className="font-sans">
-				<main className="container mx-auto p-4">
+				<main className="container mx-auto w-full max-w-screen-md p-4">
 					<header className="mb-8">
 						<h1 className="font-bold text-3xl text-gray-800">Todo App</h1>
 					</header>
