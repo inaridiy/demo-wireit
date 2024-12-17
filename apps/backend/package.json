@@ -1,5 +1,7 @@
 {
 	"name": "backend",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
 	"scripts": {
 		"dev": "wireit",
 		"deploy": "wireit",
@@ -24,9 +26,11 @@
 			"output": ["worker-configuration.d.ts"]
 		},
 		"dev": {
-			"service": true,
 			"command": "wrangler dev",
-			"dependencies": ["cf-typegen", "../../packages/shared:build"]
+			"dependencies": ["cf-typegen", "../../packages/shared:build"],
+			"service": {
+				"readyWhen": { "lineMatches": "[wrangler:inf] Ready on http://localhost:\\d+" }
+			}
 		},
 		"deploy": {
 			"service": true,

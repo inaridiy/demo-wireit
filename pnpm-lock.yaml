@@ -39,18 +39,21 @@ importers:
       '@cloudflare/workers-types':
         specifier: ^4.20241216.0
         version: 4.20241216.0
-      typescript:
-        specifier: ^5.7.2
-        version: 5.7.2
       wrangler:
         specifier: ^3.88.0
         version: 3.96.0(@cloudflare/workers-types@4.20241216.0)
 
   apps/frontend:
     dependencies:
+      backend:
+        specifier: workspace:*
+        version: link:../backend
       hono:
         specifier: ^4.6.14
         version: 4.6.14
+      shared:
+        specifier: workspace:*
+        version: link:../../packages/shared
     devDependencies:
       '@cloudflare/workers-types':
         specifier: ^4.20241216.0

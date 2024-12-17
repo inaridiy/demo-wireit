@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import { App as BackendApp } from "backend";
 
 const app = new Hono<{ Bindings: CloudflareBindings }>();
 
