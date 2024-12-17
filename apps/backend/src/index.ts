@@ -5,6 +5,7 @@ import { type Todo, createTodoSchema, serializeTodo, updateTodoSchema } from "sh
 import { createHonoApp } from "./create-hono";
 import { todos } from "./schema";
 import { eq } from "drizzle-orm";
+import { hc } from "hono/client";
 
 const paramsSchema = z.object({
 	id: z.string().min(1),
@@ -57,4 +58,8 @@ const app = createHonoApp()
 	});
 
 export default app;
-export type App = typeof app;
+
+const client = hc<typeof app>("");
+export type Client = typeof client;
+
+export const hcWithType = (...args: Parameters<typeof hc>): Client => hc<typeof app>(...args);

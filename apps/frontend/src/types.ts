@@ -1,8 +1,8 @@
-import type { BackendRpc } from "./libs/backend-rpc";
+import type { Client as BackendClient } from "backend";
 
 export interface HonoEnv {
 	Bindings: CloudflareBindings;
 	Variables: {
-		backend: BackendRpc;
+		backend: BackendClient;
 	};
 }

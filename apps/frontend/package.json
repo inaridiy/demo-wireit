@@ -19,11 +19,7 @@
 	"wireit": {
 		"dev": {
 			"command": "wrangler dev --port 8788",
-			"dependencies": [
-				"cf-typegen",
-				"../../packages/shared:build",
-				"../backend:dev"
-			],
+			"dependencies": ["cf-typegen", "../../packages/shared:build", "../backend:build", "../backend:dev"],
 			"service": {
 				"readyWhen": {
 					"lineMatches": "\\S\\[wrangler:inf\\] Ready on http://localhost:\\d+"
@@ -32,37 +28,18 @@
 		},
 		"deploy": {
 			"command": "wrangler deploy --minify",
-			"dependencies": [
-				"cf-typegen",
-				"typecheck",
-				"../../packages/shared:build",
-				"../backend:deploy"
-			]
+			"dependencies": ["cf-typegen", "typecheck", "../../packages/shared:build", "../backend:deploy"]
 		},
 		"cf-typegen": {
 			"command": "wrangler types --env-interface CloudflareBindings",
-			"files": [
-				"package.json",
-				"wrangler.toml"
-			],
-			"output": [
-				"worker-configuration.d.ts"
-			]
+			"files": ["package.json", "wrangler.toml"],
+			"output": ["worker-configuration.d.ts"]
 		},
 		"typecheck": {
 			"command": "tsc --noEmit",
-			"files": [
-				"src",
-				"package.json",
-				"tsconfig.json",
-				"worker-configuration.d.ts"
-			],
+			"files": ["src", "package.json", "tsconfig.json", "worker-configuration.d.ts"],
 			"output": [],
-			"dependencies": [
-				"cf-typegen",
-				"../../packages/shared:build",
-				"../backend:typegen"
-			]
+			"dependencies": ["cf-typegen", "../../packages/shared:build", "../backend:build"]
 		}
 	}
 }

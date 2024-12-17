@@ -6,8 +6,8 @@
 		"dev": "wireit",
 		"deploy": "wireit",
 		"cf-typegen": "wireit",
-		"typecheck": "wireit",
-		"typegen": "wireit"
+		"build": "wireit",
+		"typecheck": "wireit"
 	},
 	"dependencies": {
 		"@hono/zod-validator": "^0.4.2",
@@ -30,12 +30,18 @@
 		},
 		"dev": {
 			"command": "wrangler dev --port 8787",
-			"dependencies": ["cf-typegen", "typegen", "../../packages/shared:build"],
+			"dependencies": ["cf-typegen", "../../packages/shared:build"],
 			"service": {
 				"readyWhen": {
 					"lineMatches": "\\S\\[wrangler:inf\\] Ready on http://localhost:\\d+"
 				}
 			}
+		},
+		"build": {
+			"command": "tsc",
+			"files": ["src", "tsconfig.json", "package.json", "worker-configuration.d.ts"],
+			"output": ["dist"],
+			"dependencies": ["cf-typegen", "../../packages/shared:build"]
 		},
 		"deploy": {
 			"command": "wrangler deploy --minify",
@@ -45,12 +51,6 @@
 			"command": "tsc --noEmit",
 			"files": ["src", "package.json", "tsconfig.json", "worker-configuration.d.ts"],
 			"output": [],
-			"dependencies": ["cf-typegen", "../../packages/shared:build"]
-		},
-		"typegen": {
-			"command": "tsc --emitDeclarationOnly",
-			"files": ["src", "tsconfig.json", "package.json", "worker-configuration.d.ts"],
-			"output": ["dist"],
 			"dependencies": ["cf-typegen", "../../packages/shared:build"]
 		}
 	}
