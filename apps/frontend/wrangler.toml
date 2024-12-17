@@ -3,3 +3,7 @@ name = "frontend"
 main = "src/index.ts"
 compatibility_date = "2024-12-16"
 assets = { directory = "./public", binding = "ASSETS" }
+
+services = [
+  { binding = "BACKEND_WORKER", service = "wireit-demo-backend" },
+]

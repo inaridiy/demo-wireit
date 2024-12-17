@@ -26,14 +26,13 @@
 			"output": ["worker-configuration.d.ts"]
 		},
 		"dev": {
-			"command": "wrangler dev",
+			"command": "wrangler dev --port 8787",
 			"dependencies": ["cf-typegen", "../../packages/shared:build"],
 			"service": {
-				"readyWhen": { "lineMatches": "[wrangler:inf] Ready on http://localhost:\\d+" }
+				"readyWhen": { "lineMatches": "\\S\\[wrangler:inf\\] Ready on http://localhost:\\d+" }
 			}
 		},
 		"deploy": {
-			"service": true,
 			"command": "wrangler deploy --minify",
 			"dependencies": ["cf-typegen", "../../packages/shared:build", "typecheck"]
 		},

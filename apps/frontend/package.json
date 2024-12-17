@@ -1,9 +1,10 @@
 {
 	"name": "frontend",
 	"scripts": {
-		"dev": "wrangler dev",
-		"deploy": "wrangler deploy --minify",
-		"cf-typegen": "wrangler types --env-interface CloudflareBindings"
+		"dev": "wireit",
+		"deploy": "wireit",
+		"cf-typegen": "wireit",
+		"typecheck": "wireit"
 	},
 	"dependencies": {
 		"hono": "^4.6.14",
@@ -13,5 +14,29 @@
 	"devDependencies": {
 		"@cloudflare/workers-types": "^4.20241216.0",
 		"wrangler": "^3.88.0"
+	},
+	"wireit": {
+		"dev": {
+			"command": "wrangler dev --port 8788",
+			"dependencies": ["../../packages/shared:build", "../backend:dev"],
+			"service": {
+				"readyWhen": { "lineMatches": "\\S\\[wrangler:inf\\] Ready on http://localhost:\\d+" }
+			}
+		},
+		"deploy": {
+			"command": "wrangler deploy --minify",
+			"dependencies": ["cf-typegen", "typecheck", "../../packages/shared:build"]
+		},
+		"cf-typegen": {
+			"command": "wrangler types --env-interface CloudflareBindings",
+			"files": ["package.json", "wrangler.toml"],
+			"output": ["worker-configuration.d.ts"]
+		},
+		"typecheck": {
+			"command": "tsc --noEmit",
+			"files": ["src", "package.json", "tsconfig.json", "worker-configuration.d.ts"],
+			"output": [],
+			"dependencies": ["cf-typegen", "../../packages/shared:build", "../backend:typegen"]
+		}
 	}
 }
