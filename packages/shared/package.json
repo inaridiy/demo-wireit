@@ -1,0 +1,24 @@
+{
+	"name": "shared",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"build": "wireit"
+	},
+	"keywords": [],
+	"author": "inaridiy",
+	"license": "MIT",
+	"devDependencies": {
+		"@types/node": "^22.10.2",
+		"typescript": "^5.7.2",
+		"wireit": "^0.14.9"
+	},
+	"wireit": {
+		"build": {
+			"command": "tsc",
+			"files": ["src", "tsconfig.json", "package.json"],
+			"output": ["dist"]
+		}
+	}
+}

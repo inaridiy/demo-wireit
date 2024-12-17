@@ -1,25 +1,28 @@
 {
-  "name": "demo-wireit",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "format": "biome format .",
-    "format:fix": "pnpm format --write .",
-    "lint": "biome check .",
-    "lint:fix": "pnpm lint --apply",
-    "lint:repo": "sherif"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@biomejs/biome": "1.9.4",
-    "sherif": "^1.0.1",
-    "simple-git-hooks": "^2.11.1"
-  },
-  "simple-git-hooks": {
-    "pre-commit": "pnpm format && pnpm lint && pnpm lint:repo"
-  }
+	"name": "demo-wireit",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"build": "wireit",
+		"format": "biome format .",
+		"format:fix": "pnpm format --write .",
+		"lint": "biome check .",
+		"lint:fix": "pnpm lint --apply",
+		"lint:repo": "sherif"
+	},
+	"author": "inaridiy",
+	"license": "MIT",
+	"devDependencies": {
+		"@biomejs/biome": "1.9.4",
+		"sherif": "^1.0.1",
+		"simple-git-hooks": "^2.11.1",
+		"wireit": "^0.14.9"
+	},
+	"wireit": {
+		"build": {
+			"dependencies": ["./packages/shared:build"]
+		}
+	},
+	"simple-git-hooks": {
+		"pre-commit": "pnpm format && pnpm lint && pnpm lint:repo"
+	}
 }
