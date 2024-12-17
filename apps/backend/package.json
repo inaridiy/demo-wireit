@@ -36,6 +36,7 @@
 		"typecheck": {
 			"command": "tsc --noEmit",
 			"files": ["src", "package.json", "tsconfig.json", "worker-configuration.d.ts"],
+			"output": [],
 			"dependencies": ["cf-typegen", "../../packages/shared:build"]
 		},
 		"typegen": {

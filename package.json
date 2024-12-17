@@ -2,7 +2,7 @@
 	"name": "demo-wireit",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
-		"build": "wireit",
+		"typecheck": "wireit",
 		"format": "biome format .",
 		"format:fix": "pnpm format --write .",
 		"lint": "biome check .",
@@ -18,8 +18,8 @@
 		"wireit": "^0.14.9"
 	},
 	"wireit": {
-		"build": {
-			"dependencies": ["./packages/shared:build"]
+		"typecheck": {
+			"dependencies": ["./packages/shared:typecheck", "./apps/backend:typecheck"]
 		}
 	},
 	"simple-git-hooks": {
