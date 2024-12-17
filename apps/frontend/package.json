@@ -18,7 +18,7 @@
 	"wireit": {
 		"dev": {
 			"command": "wrangler dev --port 8788",
-			"dependencies": ["../../packages/shared:build", "../backend:dev"],
+			"dependencies": ["cf-typegen", "../../packages/shared:build", "../backend:dev"],
 			"service": {
 				"readyWhen": { "lineMatches": "\\S\\[wrangler:inf\\] Ready on http://localhost:\\d+" }
 			}

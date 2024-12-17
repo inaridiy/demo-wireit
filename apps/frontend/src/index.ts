@@ -1,9 +1,8 @@
-import { Hono } from "hono";
-import { App as BackendApp } from "backend";
+import { createHonoApp } from "./create-hono";
 
-const app = new Hono<{ Bindings: CloudflareBindings }>();
+const app = createHonoApp();
 
-app.get("/message", (c) => {
+app.get("/", (c) => {
 	return c.text("Hello Hono!");
 });
 
