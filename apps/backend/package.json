@@ -3,7 +3,9 @@
 	"scripts": {
 		"dev": "wireit",
 		"deploy": "wireit",
-		"cf-typegen": "wireit"
+		"cf-typegen": "wireit",
+		"typecheck": "wireit",
+		"typegen": "wireit"
 	},
 	"dependencies": {
 		"@hono/zod-validator": "^0.4.2",
@@ -29,6 +31,17 @@
 		"deploy": {
 			"service": true,
 			"command": "wrangler deploy --minify",
+			"dependencies": ["cf-typegen", "../../packages/shared:build", "typecheck"]
+		},
+		"typecheck": {
+			"command": "tsc --noEmit",
+			"files": ["src", "package.json", "tsconfig.json", "worker-configuration.d.ts"],
+			"dependencies": ["cf-typegen", "../../packages/shared:build"]
+		},
+		"typegen": {
+			"command": "tsc --emitDeclarationOnly",
+			"files": ["src", "tsconfig.json", "package.json", "worker-configuration.d.ts"],
+			"output": ["dist"],
 			"dependencies": ["cf-typegen", "../../packages/shared:build"]
 		}
 	}
