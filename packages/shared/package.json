@@ -18,16 +18,27 @@
 	"wireit": {
 		"build": {
 			"command": "tsc",
-			"files": ["src", "tsconfig.json", "package.json"],
-			"output": ["dist"]
+			"files": [
+				"src",
+				"tsconfig.json",
+				"package.json"
+			],
+			"output": [
+				"dist"
+			]
 		},
 		"typecheck": {
 			"command": "tsc --noEmit",
-			"files": ["src", "tsconfig.json", "package.json"],
+			"files": [
+				"src",
+				"tsconfig.json",
+				"package.json"
+			],
 			"output": []
 		}
 	},
 	"dependencies": {
+		"hono": "^4.6.14",
 		"zod": "^3.24.1"
 	}
 }
