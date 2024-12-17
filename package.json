@@ -2,6 +2,8 @@
 	"name": "demo-wireit",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
+		"dev": "wireit",
+		"deploy": "wireit",
 		"typecheck": "wireit",
 		"format": "biome format .",
 		"format:fix": "pnpm format --write .",
@@ -18,8 +20,14 @@
 		"wireit": "^0.14.9"
 	},
 	"wireit": {
+		"dev": {
+			"dependencies": ["./apps/backend:dev", "./apps/frontend:dev"]
+		},
+		"deploy": {
+			"dependencies": ["./apps/backend:deploy", "./apps/frontend:deploy"]
+		},
 		"typecheck": {
-			"dependencies": ["./packages/shared:typecheck", "./apps/backend:typecheck"]
+			"dependencies": ["./packages/shared:typecheck", "./apps/backend:typecheck", "./apps/frontend:typecheck"]
 		}
 	},
 	"simple-git-hooks": {
