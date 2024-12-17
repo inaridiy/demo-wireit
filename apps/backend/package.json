@@ -1,9 +1,9 @@
 {
 	"name": "backend",
 	"scripts": {
-		"dev": "wrangler dev",
-		"deploy": "wrangler deploy --minify",
-		"cf-typegen": "wrangler types --env-interface CloudflareBindings"
+		"dev": "wireit",
+		"deploy": "wireit",
+		"cf-typegen": "wireit"
 	},
 	"dependencies": {
 		"@hono/zod-validator": "^0.4.2",
@@ -14,5 +14,22 @@
 	"devDependencies": {
 		"@cloudflare/workers-types": "^4.20241216.0",
 		"wrangler": "^3.88.0"
+	},
+	"wireit": {
+		"cf-typegen": {
+			"command": "wrangler types --env-interface CloudflareBindings",
+			"files": ["package.json", "wrangler.toml"],
+			"output": ["worker-configuration.d.ts"]
+		},
+		"dev": {
+			"service": true,
+			"command": "wrangler dev",
+			"dependencies": ["cf-typegen", "../../packages/shared:build"]
+		},
+		"deploy": {
+			"service": true,
+			"command": "wrangler deploy --minify",
+			"dependencies": ["cf-typegen", "../../packages/shared:build"]
+		}
 	}
 }

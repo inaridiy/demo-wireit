@@ -4,11 +4,7 @@ import { z } from "zod";
 import { zValidator } from "@hono/zod-validator";
 import { todoSchema, createTodoSchema, updateTodoSchema } from "shared";
 
-type Bindings = {
-	DB: D1Database;
-};
-
-const app = new Hono<{ Bindings: Bindings }>();
+const app = new Hono<{ Bindings: CloudflareBindings }>();
 app.use("/*", cors());
 
 const paramsSchema = z.object({
