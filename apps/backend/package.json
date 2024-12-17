@@ -1,15 +1,18 @@
 {
-  "name": "backend",
-  "scripts": {
-    "dev": "wrangler dev",
-    "deploy": "wrangler deploy --minify",
-    "cf-typegen": "wrangler types --env-interface CloudflareBindings"
-  },
-  "dependencies": {
-    "hono": "^4.6.14"
-  },
-  "devDependencies": {
-    "@cloudflare/workers-types": "^4.20241216.0",
-    "wrangler": "^3.88.0"
-  }
+	"name": "backend",
+	"scripts": {
+		"dev": "wrangler dev",
+		"deploy": "wrangler deploy --minify",
+		"cf-typegen": "wrangler types --env-interface CloudflareBindings"
+	},
+	"dependencies": {
+		"@hono/zod-validator": "^0.4.2",
+		"hono": "^4.6.14",
+		"shared": "workspace:*",
+		"zod": "^3.24.1"
+	},
+	"devDependencies": {
+		"@cloudflare/workers-types": "^4.20241216.0",
+		"wrangler": "^3.88.0"
+	}
 }
